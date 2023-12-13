@@ -13,6 +13,8 @@ class CacheResponse:
 # Note, this should have been a 'DB Client' class (or something like that), that has a Cache object.
 # For simplicity, it's both :). Means that this Cache object should always return data. It indicates whether the data was retrieved
 # using cache or DB when calling 'get'
+# We assume that it makes sense to call consecutive 8KB(Metadata) offsets, and use this assumption to try and compose
+# The required 64KB chunk if the full data is not in the cache
 class Cache:
     def __init__(self, file_path, max_size: int = 10 * 1024, evictor: EvictionPolicy = lFUDADecayFactorEvictor) -> None:
         """
